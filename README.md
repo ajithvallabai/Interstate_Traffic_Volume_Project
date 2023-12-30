@@ -24,3 +24,7 @@ Metro Interstate traffic volume project (MLOps app)
 
 ### To Run
 - python app.py
+
+ECR  REPO
+
+306093656765.dkr.ecr.us-east-1.amazonaws.com/trafficvolume
