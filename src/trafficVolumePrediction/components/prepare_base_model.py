@@ -8,8 +8,8 @@ class PrepareBaseModel:
     
     def get_base_model(self):
         train_model = tf.keras.Sequential()
-        train_model.add(tf.keras.layers.LSTM(128, return_sequences=True, input_shape= (self.config.params_features, 1)))
-        train_model.add(tf.keras.layers.LSTM(64, return_sequences=False))
+        train_model.add(tf.keras.layers.LSTM(128, activation='relu', return_sequences=True, input_shape= (self.config.params_features, 1)))
+        train_model.add(tf.keras.layers.LSTM(64, activation='relu'))
         train_model.add(tf.keras.layers.Dense(25))
         self.model = train_model
 
@@ -18,9 +18,7 @@ class PrepareBaseModel:
     @staticmethod
     def _prepare_full_model(model, learning_rate):
 
-        prediction = tf.keras.layers.Dense(1,
-            activation="softmax"
-        )(model.output)
+        prediction = tf.keras.layers.Dense(1)(model.output)
 
         full_model = tf.keras.models.Model(
             inputs=model.input,
@@ -28,8 +26,7 @@ class PrepareBaseModel:
         )
 
         full_model.compile(
-            optimizer='adam', loss='mean_squared_error',
-            metrics=["accuracy"]
+            optimizer='adam', loss='mean_squared_error'
         )
 
         full_model.summary()
