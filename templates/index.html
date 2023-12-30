@@ -1,66 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InterState Traffic Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
 </head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<body>
+<body class="container mt-5">
 
-    <h1>InterState Traffic Prediction</h1>
-    
+    <h1 class="mb-4">InterState Traffic Prediction</h1>
+
     <form id="predictionForm">
-        <label for="holiday">Holiday:</label>
-        <input type="text" id="holiday" name="holiday" required><br>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="holiday">Holiday:</label>
+                    <input type="text" class="form-control" id="holiday" name="holiday" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="temp">Temperature:</label>
+                    <input type="text" class="form-control" id="temp" name="temp" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="rain_1h">Rain (1h):</label>
+                    <input type="text" class="form-control" id="rain_1h" name="rain_1h" required>
+                </div>
+            </div>
+        </div>
 
-        <label for="temp">Temperature:</label>
-        <input type="text" id="temp" name="temp" required><br>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="snow_1h">Snow (1h):</label>
+                    <input type="text" class="form-control" id="snow_1h" name="snow_1h" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="clouds_all">Clouds:</label>
+                    <input type="text" class="form-control" id="clouds_all" name="clouds_all" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="weather_main">Weather Main:</label>
+                    <input type="text" class="form-control" id="weather_main" name="weather_main" required>
+                </div>
+            </div>
+        </div>
 
-        <label for="rain_1h">Rain (1h):</label>
-        <input type="text" id="rain_1h" name="rain_1h" required><br>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="weather_description">Weather Description:</label>
+                    <input type="text" class="form-control" id="weather_description" name="weather_description"
+                        required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="year">Year:</label>
+                    <input type="text" class="form-control" id="year" name="year" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="month">Month:</label>
+                    <input type="text" class="form-control" id="month" name="month" required>
+                </div>
+            </div>
+        </div>
 
-        <label for="snow_1h">Snow (1h):</label>
-        <input type="text" id="snow_1h" name="snow_1h" required><br>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="day">Day:</label>
+                    <input type="text" class="form-control" id="day" name="day" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="hour">Hour:</label>
+                    <input type="text" class="form-control" id="hour" name="hour" required>
+                </div>
+            </div>
+        </div>
 
-        <label for="clouds_all">Clouds:</label>
-        <input type="text" id="clouds_all" name="clouds_all" required><br>
-
-        <label for="weather_main">Weather Main:</label>
-        <input type="text" id="weather_main" name="weather_main" required><br>
-
-        <label for="weather_description">Weather Description:</label>
-        <input type="text" id="weather_description" name="weather_description" required><br>
-
-        <label for="year">Year:</label>
-        <input type="text" id="year" name="year" required><br>
-
-        <label for="month">Month:</label>
-        <input type="text" id="month" name="month" required><br>
-
-        <label for="day">Day:</label>
-        <input type="text" id="day" name="day" required><br>
-
-        <label for="hour">Hour:</label>
-        <input type="text" id="hour" name="hour" required><br>
-
-        <button type="button" onclick="predictWeather()">Predict</button>
+        <button type="button" class="btn btn-primary" onclick="predictWeather()">Predict</button>
     </form>
 
-    <div id="predictionResult" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; display: none;">
+    <div id="predictionResult" class="mt-4" style="display: none;">
         <h2>Prediction Result</h2>
         <pre id="resultContent"></pre>
     </div>
 
     <script>
-        
         function predictWeather() {
             // Create an object with the form data
-            // temp,rain_1h,snow_1h,clouds_all,weather_main,weather_description,year,month,day,hour
-            const formData = { 'data': {
+            const formData = {
+                'data': {
                     holiday: document.getElementById('holiday').value,
                     temp: document.getElementById('temp').value,
                     rain_1h: document.getElementById('rain_1h').value,
@@ -97,4 +143,5 @@
     </script>
 
 </body>
+
 </html>

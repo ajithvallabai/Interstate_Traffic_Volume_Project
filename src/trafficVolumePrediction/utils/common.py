@@ -9,6 +9,7 @@ from box import ConfigBox
 from pathlib import Path
 from typing import Any
 import base64
+import numpy as np
 
 @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
@@ -126,3 +127,15 @@ def decodeImage(imgstring, fileName):
 def encodeImageIntoBase64(croppedImagePath):
     with open(croppedImagePath, "rb") as f:
         return base64.b64encode(f.read())
+    
+
+@ensure_annotations
+def decodeData(data: Any) -> np.array:
+    decodedFeatures = []
+    for key, val in data.items():
+        if key in ['temp','rain_1h', 'snow_1h']:
+            val = float(val)
+        else:
+            val = int(val)
+        decodedFeatures.append(val)
+    return np.array([decodedFeatures])

@@ -43,11 +43,11 @@ def decodeData(data):
 def predictRoute():
     data = request.json['data']
     decodedFeatures = decodeData(data)
-    print(decodedFeatures)
+    # print(decodedFeatures)
     # decodeImage(image, clApp.filename)
     result = clApp.classifier.predict(decodedFeatures)
-    print("result")
-    print(result) 
+    # print("result")
+    # print(result) 
     return jsonify(result)
 
 
