@@ -1,0 +1,99 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/trafficVolumePrediction/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 78f2ab220c35547e94baacffe0c2cd7e
+      size: 941
+    - path: src/trafficVolumePrediction/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: 294d2d112af52d3900fc3eaed80d791d
+      size: 868
+    outs:
+    - path: artifacts/data_ingestion/data_trafficVolume.csv
+      hash: md5
+      md5: 154630e0bfca2d23a880f8273f16deee
+      size: 68070
+  prepare_base_model:
+    cmd: python src/trafficVolumePrediction/pipeline/stage_02_prepare_base_model.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 78f2ab220c35547e94baacffe0c2cd7e
+      size: 941
+    - path: src/trafficVolumePrediction/pipeline/stage_02_prepare_base_model.py
+      hash: md5
+      md5: 1ad15de0ad42651c97946864cf49f13e
+      size: 1017
+    params:
+      params.yaml:
+        FEATURES: 11
+        LEARNING_RATE: 0.01
+    outs:
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: ce59308e134e6a2807eb154f667f5ebd.dir
+      size: 990104
+      nfiles: 2
+  training:
+    cmd: python src/trafficVolumePrediction/pipeline/stage_03_training.py
+    deps:
+    - path: artifacts/data_ingestion/data_trafficVolume.csv
+      hash: md5
+      md5: 154630e0bfca2d23a880f8273f16deee
+      size: 68070
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: ce59308e134e6a2807eb154f667f5ebd.dir
+      size: 990104
+      nfiles: 2
+    - path: config/config.yaml
+      hash: md5
+      md5: 78f2ab220c35547e94baacffe0c2cd7e
+      size: 941
+    - path: src/trafficVolumePrediction/components/prepare_callbacks.py
+      hash: md5
+      md5: 165c9a9b5886130b996db6fd6ddaa3ce
+      size: 1018
+    - path: src/trafficVolumePrediction/pipeline/stage_03_training.py
+      hash: md5
+      md5: 6372d6e6f55f7f52c6d386c39658a74e
+      size: 1282
+    params:
+      params.yaml:
+        BATCH_SIZE: 50
+        EPOCHS: 10
+    outs:
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: c280d1bb99a44eb29305d612ac6ca211
+      size: 1460104
+  evaluation:
+    cmd: python src/trafficVolumePrediction/pipeline/stage_04_evaluation.py
+    deps:
+    - path: artifacts/data_ingestion/data_trafficVolume.csv
+      hash: md5
+      md5: 154630e0bfca2d23a880f8273f16deee
+      size: 68070
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: c280d1bb99a44eb29305d612ac6ca211
+      size: 1460104
+    - path: config/config.yaml
+      hash: md5
+      md5: 78f2ab220c35547e94baacffe0c2cd7e
+      size: 941
+    - path: src/trafficVolumePrediction/pipeline/stage_04_evaluation.py
+      hash: md5
+      md5: f965f54469f366e84ccfe10eea9a0456
+      size: 891
+    params:
+      params.yaml:
+        BATCH_SIZE: 50
+    outs:
+    - path: scores.json
+      hash: md5
+      md5: c879e46b2c006d73de24ccd8a03ce92a
+      size: 28
