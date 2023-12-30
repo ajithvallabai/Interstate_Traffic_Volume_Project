@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InterState Traffic Prediction</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<body>
+
+    <h1>InterState Traffic Prediction</h1>
+    
+    <form id="predictionForm">
+        <label for="holiday">Holiday:</label>
+        <input type="text" id="holiday" name="holiday" required><br>
+
+        <label for="temp">Temperature:</label>
+        <input type="text" id="temp" name="temp" required><br>
+
+        <label for="rain_1h">Rain (1h):</label>
+        <input type="text" id="rain_1h" name="rain_1h" required><br>
+
+        <label for="snow_1h">Snow (1h):</label>
+        <input type="text" id="snow_1h" name="snow_1h" required><br>
+
+        <label for="clouds_all">Clouds:</label>
+        <input type="text" id="clouds_all" name="clouds_all" required><br>
+
+        <label for="weather_main">Weather Main:</label>
+        <input type="text" id="weather_main" name="weather_main" required><br>
+
+        <label for="weather_description">Weather Description:</label>
+        <input type="text" id="weather_description" name="weather_description" required><br>
+
+        <label for="year">Year:</label>
+        <input type="text" id="year" name="year" required><br>
+
+        <label for="month">Month:</label>
+        <input type="text" id="month" name="month" required><br>
+
+        <label for="day">Day:</label>
+        <input type="text" id="day" name="day" required><br>
+
+        <label for="hour">Hour:</label>
+        <input type="text" id="hour" name="hour" required><br>
+
+        <button type="button" onclick="predictWeather()">Predict</button>
+    </form>
+
+    <div id="predictionResult" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; display: none;">
+        <h2>Prediction Result</h2>
+        <pre id="resultContent"></pre>
+    </div>
+
+    <script>
+        
+        function predictWeather() {
+            // Create an object with the form data
+            // temp,rain_1h,snow_1h,clouds_all,weather_main,weather_description,year,month,day,hour
+            const formData = { 'data': {
+                    holiday: document.getElementById('holiday').value,
+                    temp: document.getElementById('temp').value,
+                    rain_1h: document.getElementById('rain_1h').value,
+                    snow_1h: document.getElementById('snow_1h').value,
+                    clouds_all: document.getElementById('clouds_all').value,
+                    weather_main: document.getElementById('weather_main').value,
+                    weather_description: document.getElementById('weather_description').value,
+                    year: document.getElementById('year').value,
+                    month: document.getElementById('month').value,
+                    day: document.getElementById('day').value,
+                    hour: document.getElementById('hour').value
+                }
+            };
+
+            // Make an AJAX request
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/predict', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Parse the JSON response
+                    const result = JSON.parse(xhr.responseText);
+
+                    // Display the result on the screen
+                    document.getElementById('resultContent').textContent = JSON.stringify(result, null, 2);
+                    document.getElementById('predictionResult').style.display = 'block';
+                }
+            };
+
+            // Convert the form data to JSON and send the request
+            xhr.send(JSON.stringify(formData));
+        }
+    </script>
+
+</body>
+</html>

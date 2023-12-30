@@ -35,5 +35,5 @@ class Evaluation:
 
     
     def save_score(self):
-        scores = {"loss": self.score[0]}
+        scores = {"loss": self.score}
         save_json(path=Path("scores.json"), data=scores)

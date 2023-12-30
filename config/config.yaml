@@ -2,9 +2,11 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://github.com/ajithvallabai/Interstate_Traffic_Volume_Project/raw/dev_tf/data/data_trafficVolume.zip
-  local_data_file: artifacts/data_ingestion/data.zip
-  unzip_dir: artifacts/data_ingestion
+  # source_URL: https://github.com/ajithvallabai/Interstate_Traffic_Volume_Project/raw/dev_tf/data/data_trafficVolume.zip
+  local_data_file: artifacts/data_ingestion/data_trafficVolume.csv
+  # unzip_dir: artifacts/data_ingestion
+  cloud_config_zipfile: secure-connect-traffic-db.zip
+  authentication_token: traffic_db-token.json
 
 prepare_base_model:
   root_dir: artifacts/prepare_base_model

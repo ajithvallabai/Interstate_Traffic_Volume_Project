@@ -21,9 +21,9 @@ class ConfigurationManager:
 
           data_ingestion_config = DataIngestionConfig(
                 root_dir=config.root_dir,
-                source_URL=config.source_URL,
                 local_data_file=config.local_data_file,
-                unzip_dir=config.unzip_dir
+                cloud_config_zipfile=config.cloud_config_zipfile,
+                authentication_token=config.authentication_token
           )
           return data_ingestion_config
 
@@ -62,7 +62,7 @@ class ConfigurationManager:
         training = self.config.training
         prepare_base_model = self.config.prepare_base_model
         params = self.params
-        training_data = os.path.join(self.config.data_ingestion.unzip_dir, "data_trafficVolume.csv")
+        training_data = os.path.join(self.config.data_ingestion.local_data_file)
         create_directories([
             Path(training.root_dir)
         ])

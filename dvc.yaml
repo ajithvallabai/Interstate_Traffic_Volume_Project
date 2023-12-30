@@ -1,0 +1,46 @@
+stages:
+  data_ingestion:
+    cmd: python src/trafficVolumePrediction/pipeline/stage_01_data_ingestion.py
+    deps:
+      - src/trafficVolumePrediction/pipeline/stage_01_data_ingestion.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_ingestion/data_trafficVolume.csv
+    
+  prepare_base_model:
+    cmd: python src/trafficVolumePrediction/pipeline/stage_02_prepare_base_model.py
+    deps:
+      - src/trafficVolumePrediction/pipeline/stage_02_prepare_base_model.py
+      - config/config.yaml
+    params:
+      - FEATURES
+      - LEARNING_RATE
+    outs:
+      - artifacts/prepare_base_model
+
+  training:
+      cmd: python src/trafficVolumePrediction/pipeline/stage_03_training.py
+      deps:
+        - src/trafficVolumePrediction/pipeline/stage_03_training.py
+        - src/trafficVolumePrediction/components/prepare_callbacks.py
+        - config/config.yaml
+        - artifacts/data_ingestion/data_trafficVolume.csv
+        - artifacts/prepare_base_model
+      params:
+        - EPOCHS
+        - BATCH_SIZE
+      outs:
+        - artifacts/training/model.h5
+
+  evaluation:
+    cmd: python src/trafficVolumePrediction/pipeline/stage_04_evaluation.py
+    deps:
+      - src/trafficVolumePrediction/pipeline/stage_04_evaluation.py
+      - config/config.yaml
+      - artifacts/data_ingestion/data_trafficVolume.csv
+      - artifacts/training/model.h5
+    params:
+      - BATCH_SIZE
+    metrics:
+    - scores.json:
+        cache: false

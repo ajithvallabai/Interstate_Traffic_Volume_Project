@@ -160,3 +160,6 @@ cython_debug/
 #.idea/
 
 artifacts/
+
+traffic_db-token.json
+secure-connect-traffic-db.zip
