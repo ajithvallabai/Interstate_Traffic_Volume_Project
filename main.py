@@ -28,29 +28,29 @@ from trafficVolumePrediction.pipeline.predict import PredictionPipeline
 #     logger.exception(e)
 #     raise e
 
-# STAGE_NAME = "Training"
-
-# try:
-#     logger.info(f"*************************")
-#     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-#     model_trainer = ModelTrainingPipeline()
-#     model_trainer.main()
-#     logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\nx========x")
-# except Exception as e:
-#     logger.exception(e)
-#     raise e
-
-STAGE_NAME = "Evaluation stage"
+STAGE_NAME = "Training"
 
 try:
     logger.info(f"*************************")
     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-    model_evaluation = EvaluationPipeline()
-    model_evaluation.main()
+    model_trainer = ModelTrainingPipeline()
+    model_trainer.main()
     logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\nx========x")
 except Exception as e:
     logger.exception(e)
     raise e
+
+# STAGE_NAME = "Evaluation stage"
+
+# try:
+#     logger.info(f"*************************")
+#     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+#     model_evaluation = EvaluationPipeline()
+#     model_evaluation.main()
+#     logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\nx========x")
+# except Exception as e:
+#     logger.exception(e)
+#     raise e
 
 import numpy as np
 model = PredictionPipeline(np.array([[0,288.28,0.0,0.0,40,0,0,2012,10,2,9]]))

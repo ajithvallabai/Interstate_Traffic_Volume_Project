@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 import os
 from flask_cors import CORS, cross_origin
-from trafficVolumePrediction.utils.common import decodeData
+from trafficVolumePrediction.components import decodeData
 from trafficVolumePrediction.pipeline.predict import PredictionPipeline
-
+from trafficVolumePrediction.components import data_validation
 
 
 os.putenv('LANG', 'en_US.UTF-8')
@@ -28,11 +28,11 @@ def trainRoute():
     os.system("dvc repro")
     return "Training done successfully!"
 
-
 @app.route("/predict", methods=['POST'])
 @cross_origin()
 def predictRoute():
     data = request.json['data']
+    data = data_validation(data)
     decodedFeatures = decodeData(data)
     result = clApp.classifier.predict(decodedFeatures)
     return jsonify(result)
@@ -40,7 +40,8 @@ def predictRoute():
 
 if __name__ == "__main__":
     clApp = ClientApp()
+
     # app.run(host='127.0.0.1', port=5000, debug=True) #local host
-    app.run(host='0.0.0.0', port=8080, debug=True) #local host
+    app.run(host='0.0.0.0', port=8080) #local host
     # # app.run(host='0.0.0.0', port=8080) #for AWS
     # app.run(host='0.0.0.0', port=80) #for AZURE

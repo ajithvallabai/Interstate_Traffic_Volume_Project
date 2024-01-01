@@ -4,8 +4,11 @@ import zipfile
 from trafficVolumePrediction import logger
 from trafficVolumePrediction.utils.common import get_size
 from trafficVolumePrediction.entity.config_entity import DataIngestionConfig
+from trafficVolumePrediction.utils.common import read_yaml
+from trafficVolumePrediction.constants import DATA_INFO_PATH
 import time
 import csv
+import numpy as np
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 import json
@@ -63,3 +66,35 @@ class DataIngestion:
                 delay *= 2
         else:
             logger.info(f"Failed connecting to astra/casandra db after {max_retries} attempt")
+
+def find_nth_number_position(target, info_list):
+    # Split the list of holidays
+    infos = info_list.split(',')
+
+    # Use the index() function to find the position of the target value
+    try:
+        position = infos.index(target.strip())
+        return position
+    except ValueError:
+        logger.info(f"Index of {target} is not found")
+        return -1  # Return -1 if the target value is not found in the list
+    
+def data_validation(data):
+    dataInfo = read_yaml(DATA_INFO_PATH)
+    for key, value in data.items():
+        if key in ['holiday','weather_main','weather_description']:
+            result = find_nth_number_position(value, dataInfo[key.upper()])
+            data[key] = result
+    logger.info("data validation and transformation done")
+    return data 
+
+def decodeData(data) -> np.array:
+    decodedFeatures = []
+    for key, val in data.items():
+        if key in ['temp','rain_1h', 'snow_1h']:
+            val = float(val)
+        else:
+            val = int(val)
+        decodedFeatures.append(val)
+    logger.info("data was decoded")
+    return np.array([decodedFeatures])
