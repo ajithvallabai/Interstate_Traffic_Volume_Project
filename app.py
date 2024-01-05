@@ -4,7 +4,7 @@ from flask_cors import CORS, cross_origin
 from trafficVolumePrediction.components import decodeData
 from trafficVolumePrediction.pipeline.predict import PredictionPipeline
 from trafficVolumePrediction.components import data_validation
-
+from trafficVolumePrediction import logger
 
 os.putenv('LANG', 'en_US.UTF-8')
 os.putenv('LC_ALL', 'en_US.UTF-8')
@@ -26,17 +26,22 @@ def home():
 @cross_origin()
 def trainRoute():
     os.system("dvc repro")
+    logger.info("Training done successfully!")
     return "Training done successfully!"
 
 @app.route("/predict", methods=['POST'])
 @cross_origin()
 def predictRoute():
-    data = request.json['data']
-    data = data_validation(data)
-    decodedFeatures = decodeData(data)
-    result = clApp.classifier.predict(decodedFeatures)
-    return jsonify(result)
-
+    try:
+        data = request.json['data']
+        data = data_validation(data)
+        decodedFeatures = decodeData(data)
+        result = clApp.classifier.predict(decodedFeatures)
+        logger.info("Successfully result is responded to UI")
+        return jsonify(result)
+    except Exception as e:
+        logger.info(f"Exception is raised {e}")
+        return jsonify([{'traffic': "Error processing"}])
 
 if __name__ == "__main__":
     clApp = ClientApp()
