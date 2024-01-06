@@ -128,13 +128,3 @@ def encodeImageIntoBase64(croppedImagePath):
     with open(croppedImagePath, "rb") as f:
         return base64.b64encode(f.read())
     
-
-def decodeData(data) -> np.array:
-    decodedFeatures = []
-    for key, val in data.items():
-        if key in ['temp','rain_1h', 'snow_1h']:
-            val = float(val)
-        else:
-            val = int(val)
-        decodedFeatures.append(val)
-    return np.array([decodedFeatures])

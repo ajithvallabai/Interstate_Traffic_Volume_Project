@@ -12,14 +12,27 @@
 
 <body class="container mt-5">
 
-    <h1 class="mb-4">InterState Traffic Prediction</h1>
+    <h1 class="mb-4">InterState Traffic Volume Prediction</h1>
 
     <form id="predictionForm">
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="holiday">Holiday:</label>
-                    <input type="text" class="form-control" id="holiday" name="holiday" required>
+                    <select class="form-control" id="holiday" name="holiday" required>
+                        <option value="None">None</option>
+                        <option value="Columbus Day">Columbus Day</option>
+                        <option value="Veterans Day">Veterans Day</option>
+                        <option value="Thanksgiving Day">Thanksgiving Day</option>
+                        <option value="Christmas Day">Christmas Day</option>
+                        <option value="New Years Day">New Years Day</option>
+                        <option value="Washingtons Birthday">Washingtons Birthday</option>
+                        <option value="Memorial Day">Memorial Day</option>
+                        <option value="Independence Day">Independence Day</option>
+                        <option value="State Fair">State Fair</option>
+                        <option value="Labor Day">Labor Day</option>
+                        <option value="Martin Luther King Jr Day">Martin Luther King Jr Day</option>
+                    </select>
                 </div>
             </div>
             <div class="col-md-4">
@@ -52,7 +65,19 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="weather_main">Weather Main:</label>
-                    <input type="text" class="form-control" id="weather_main" name="weather_main" required>
+                    <select class="form-control" id="weather_main" name="weather_main" required>
+                        <option value="Clouds">Clouds</option>
+                        <option value="Clear">Clear</option>
+                        <option value="Rain">Rain</option>
+                        <option value="Drizzle">Drizzle</option>
+                        <option value="Mist">Mist</option>
+                        <option value="Haze">Haze</option>
+                        <option value="Fog">Fog</option>
+                        <option value="Thunderstorm">Thunderstorm</option>
+                        <option value="Snow">Snow</option>
+                        <option value="Squall">Snow</option>
+                        <option value="Smoke">Smoke</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -61,8 +86,46 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="weather_description">Weather Description:</label>
-                    <input type="text" class="form-control" id="weather_description" name="weather_description"
-                        required>
+                    <select class="form-control" id="weather_description" name="weather_description" required>
+                        <option value="scattered clouds">scattered clouds</option>
+                        <option value="broken clouds">broken clouds</option>
+                        <option value="overcast clouds">overcast clouds</option>
+                        <option value="sky is clear">sky is clear</option>
+                        <option value="few clouds">few clouds</option>
+                        <option value="light rain">light rain</option>
+                        <option value="light intensity drizzle">light intensity drizzle</option>
+                        <option value="mist">mist</option>
+                        <option value="haze">haze</option>
+                        <option value="fog">fog</option>
+                        <option value="proximity shower rain">proximity shower rain</option>
+                        <option value="drizzle">drizzle</option>
+                        <option value="moderate rain">moderate rain</option>
+                        <option value="heavy intensity rain">heavy intensity rain</option>
+                        <option value="proximity thunderstorm">proximity thunderstorm</option>
+                        <option value="thunderstorm with light rain">thunderstorm with light rain</option>
+                        <option value="proximity thunderstorm with rain">proximity thunderstorm with rain</option>
+                        <option value="heavy snow">heavy snow</option>
+                        <option value="heavy intensity drizzle">heavy intensity drizzle</option>
+                        <option value="snow">snow</option>
+                        <option value="thunderstorm with heavy rain">thunderstorm with heavy rain</option>
+                        <option value="freezing rain">freezing rain</option>
+                        <option value="shower snow">shower snow</option>
+                        <option value="light rain and snow">light rain and snow</option>
+                        <option value="light intensity shower rain">light intensity shower rain</option>
+                        <option value="SQUALLS">SQUALLS</option>
+                        <option value="thunderstorm with rain">thunderstorm with rain</option>
+                        <option value="proximity thunderstorm with drizzle">proximity thunderstorm with drizzle</option>
+                        <option value="thunderstorm">thunderstorm</option>
+                        <option value="Sky is Clear">Sky is Clear</option>
+                        <option value="very heavy rain">very heavy rain</option>
+                        <option value="thunderstorm with light drizzle">thunderstorm with light drizzle</option>
+                        <option value="light snow">light snow</option>
+                        <option value="thunderstorm with drizzle">thunderstorm with drizzle</option>
+                        <option value="smoke">smoke</option>
+                        <option value="shower drizzle">shower drizzle</option>
+                        <option value="light shower snow">light shower snow</option>
+                        <option value="sleet">sleet</option>
+                    </select>
                 </div>
             </div>
             <div class="col-md-4">

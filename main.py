@@ -5,40 +5,40 @@ from trafficVolumePrediction.pipeline.stage_03_training import ModelTrainingPipe
 from trafficVolumePrediction.pipeline.stage_04_evaluation import EvaluationPipeline
 from trafficVolumePrediction.pipeline.predict import PredictionPipeline
 
-# STAGE_NAME = "Data Ingestion stage"
+STAGE_NAME = "Data Ingestion stage"
 
-# try:
-#     logger.info(">>>>>>> stage {STAGE_NAME} started <<<<<")
-#     obj = DataIngestionTrainingPipeline()
-#     obj.main()
-#     logger.info(">>>>>>> stage {STAGE_NAME} completed <<<<< \n =========x")
-# except Exception as e:
-#     logger.exception(e)
-#     raise e
+try:
+    logger.info(">>>>>>> stage {STAGE_NAME} started <<<<<")
+    obj = DataIngestionTrainingPipeline()
+    obj.main()
+    logger.info(">>>>>>> stage {STAGE_NAME} completed <<<<< \n =========x")
+except Exception as e:
+    logger.exception(e)
+    raise e
 
-# STAGE_NAME = "Prepare base model"
+STAGE_NAME = "Prepare base model"
 
-# try:
-#     logger.info(f"*************************")
-#     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-#     obj = PrepareBaseModelTrainingPipeline()
-#     obj.main()
-#     logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\nx========x")
-# except Exception as e:
-#     logger.exception(e)
-#     raise e
+try:
+    logger.info(f"*************************")
+    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+    obj = PrepareBaseModelTrainingPipeline()
+    obj.main()
+    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\nx========x")
+except Exception as e:
+    logger.exception(e)
+    raise e
 
-# STAGE_NAME = "Training"
+STAGE_NAME = "Training"
 
-# try:
-#     logger.info(f"*************************")
-#     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-#     model_trainer = ModelTrainingPipeline()
-#     model_trainer.main()
-#     logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\nx========x")
-# except Exception as e:
-#     logger.exception(e)
-#     raise e
+try:
+    logger.info(f"*************************")
+    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+    model_trainer = ModelTrainingPipeline()
+    model_trainer.main()
+    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\nx========x")
+except Exception as e:
+    logger.exception(e)
+    raise e
 
 STAGE_NAME = "Evaluation stage"
 
@@ -53,5 +53,5 @@ except Exception as e:
     raise e
 
 import numpy as np
-model = PredictionPipeline(np.array([[0,288.28,0.0,0.0,40,0,0,2012,10,2,9]]))
-print(model.predict())
+model = PredictionPipeline()
+print(model.predict(np.array([[0,288.28,0.0,0.0,40,0,0,2012,10,2,9]])))

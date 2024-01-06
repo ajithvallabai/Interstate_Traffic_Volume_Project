@@ -15,4 +15,5 @@ scipy
 Flask
 Flask-Cors
 cassandra-driver
+scikit-learn
 -e .
